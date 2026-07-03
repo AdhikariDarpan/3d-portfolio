@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Darpan Adhikari — Full Stack Developer & AI Engineer. 5+ years building web, mobile, desktop, and AI applications. Interactive 3D portfolio.">
+<meta name="author" content="Darpan Adhikari">
+<meta name="keywords" content="Darpan Adhikari, full stack developer, AI engineer, web developer, React, TypeScript, Node.js, Python, Nepal, portfolio">
+<link rel="canonical" href="https://darpanadhikari.github.io/3d-portfolio/">
+<link rel="icon" href="images/logo.ico" type="image/x-icon">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Darpan Adhikari — Full Stack Developer & AI Engineer">
+<meta property="og:description" content="5+ years building scalable web, mobile, desktop, and AI applications. Explore my interactive 3D portfolio.">
+<meta property="og:image" content="https://darpanadhikari.github.io/3d-portfolio/images/logo.webp">
+<meta property="og:url" content="https://darpanadhikari.github.io/3d-portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Darpan Adhikari — Full Stack Developer & AI Engineer">
+<meta name="twitter:description" content="5+ years building scalable web, mobile, desktop, and AI applications. Interactive 3D portfolio.">
+<meta name="twitter:image" content="https://darpanadhikari.github.io/3d-portfolio/images/logo.webp">
+
+<title>Darpan Adhikari — Full Stack Developer & AI Engineer | 3D Portfolio</title>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style_3d.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Darpan Adhikari",
+  "givenName": "Darpan",
+  "familyName": "Adhikari",
+  "jobTitle": "Full Stack Developer & AI Engineer",
+  "description": "Full stack developer and AI engineer with 5+ years of experience building scalable web, mobile, desktop, and AI-driven applications. Skilled in React, TypeScript, Node.js, Python, Three.js, and cloud infrastructure.",
+  "url": "https://darpanadhikari.github.io/3d-portfolio/",
+  "image": "https://darpanadhikari.github.io/3d-portfolio/images/front-img.webp",
+  "email": "darpand263@gmail.com",
+  "telephone": "+977-9847878782",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "NP"
+  },
+  "sameAs": [
+    "https://github.com/DarpanAdhikari",
+    "https://www.linkedin.com/in/darpan-adhikari-81b866280/"
+  ],
+  "knowsAbout": [
+    "React", "TypeScript", "Three.js", "WebGL", "Node.js", "Python",
+    "FastAPI", "Django", "PHP", "Laravel", "PostgreSQL", "MySQL",
+    "MongoDB", "Redis", "Docker", "AWS", "CI/CD", "Machine Learning",
+    "Computer Vision", "NLP"
+  ],
+  "worksFor": [
+    {
+      "@type": "Organization",
+      "name": "Self-Employed / Freelance",
+      "description": "Building digital products and AI solutions for diverse clients",
+      "startDate": "2021"
+    },
+    {
+      "@type": "Organization",
+      "name": "TransPerfect",
+      "description": "Content Transcription Specialist",
+      "startDate": "2022-03",
+      "endDate": "2022-06"
+    }
+  ],
+  "knowsLanguage": ["en", "ne"]
+}
+</script>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">LOADING 3D EXPERIENCE</div>
+  <div class="loader-pct" id="lpct">0%</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- 3D CANVAS -->
+<canvas id="c3d"></canvas>
+
+<!-- INSTRUCTION HINT -->
+<div id="hint">
+  <span>WASD to walk · Explore the city · Click buildings</span>
+  <div class="hint-fade"></div>
+</div>
+
+<!-- GLOSSY OVERLAY PANELS -->
+<div id="ui-container">
+  <div id="panel-content" class="glass-panel ui-hidden">  </div>
+</div>
+
+<!-- VIRTUAL JOYSTICK (mobile) -->
+<div id="joystick">
+  <div class="joystick-ring"></div>
+  <div class="joystick-knob"></div>
+</div>
+
+<!-- PROJECT DETAIL MODAL -->
+<div id="proj-modal" class="modal-backdrop">
+  <div class="modal-glass">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- NAV DOTS -->
+<nav id="nav-dots">
+  <div class="nav-dot active" data-target="hero"><span class="dot-label">Home</span></div>
+  <div class="nav-dot" data-target="about"><span class="dot-label">About</span></div>
+  <div class="nav-dot" data-target="skills"><span class="dot-label">Skills</span></div>
+  <div class="nav-dot" data-target="projects"><span class="dot-label">Projects</span></div>
+  <div class="nav-dot" data-target="contact"><span class="dot-label">Contact</span></div>
+</nav>
+
+<!-- SEO: Content for search engines (hidden from sighted users) -->
+<div class="sr-only" aria-hidden="false">
+  <h1>Darpan Adhikari — Full Stack Developer & AI Engineer</h1>
+
+  <section>
+    <h2>About Me</h2>
+    <p>Hey, I'm Darpan Adhikari — a developer working across web, mobile, desktop, and AI-driven applications. 5+ years building scalable products from pixel-perfect UIs to rock-solid backend systems.</p>
+    <ul>
+      <li>50+ Projects completed</li>
+      <li>5+ Years of experience</li>
+      <li>30+ Satisfied clients</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Tech Stack & Skills</h2>
+    <h3>Frontend</h3>
+    <ul>
+      <li>React — Expert</li>
+      <li>TypeScript — Expert</li>
+      <li>Tailwind CSS — Expert</li>
+      <li>HTML / CSS / JavaScript — Expert</li>
+      <li>Three.js / WebGL — Advanced</li>
+      <li>Vue.js — Advanced</li>
+      <li>Bootstrap — Expert</li>
+      <li>Angular — Intermediate</li>
+    </ul>
+    <h3>Backend</h3>
+    <ul>
+      <li>Node.js — Advanced</li>
+      <li>Next.js (Full Stack) — Advanced</li>
+      <li>FastAPI / Flask / Django — Advanced</li>
+      <li>PostgreSQL — Advanced</li>
+      <li>MySQL — Expert</li>
+      <li>MongoDB — Advanced</li>
+      <li>Redis — Advanced</li>
+      <li>PHP / Laravel / CodeIgniter — Expert</li>
+    </ul>
+    <h3>Cloud & DevOps</h3>
+    <ul>
+      <li>AWS — Advanced</li>
+      <li>Docker — Advanced</li>
+      <li>CI/CD — Advanced</li>
+      <li>Nginx — Advanced</li>
+      <li>Linux (Ubuntu) — Expert</li>
+      <li>Cloudflare — Advanced</li>
+      <li>GitHub Actions — Intermediate</li>
+    </ul>
+    <h3>Tools</h3>
+    <ul>
+      <li>Figma — Advanced</li>
+      <li>Git — Expert</li>
+      <li>VS Code — Expert</li>
+      <li>Postman — Advanced</li>
+      <li>Jira — Intermediate</li>
+      <li>Webpack / Vite — Advanced</li>
+      <li>TensorFlow.js — Intermediate</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Selected Projects</h2>
+
+    <article>
+      <h3>NewsSite</h3>
+      <p>A multi-tenant news/blog platform with real-time/scheduled publishing, localization support, advanced analytics, and role-based access control.</p>
+      <p>Built with: Laravel, Livewire, Vue.js, MySQL, Redis, Tailwind</p>
+      <p>URL: https://bishwodarpan.com</p>
+    </article>
+
+    <article>
+      <h3>Blog Site</h3>
+      <p>A feature-rich blog platform with PWA support, AJAX-powered interactions, and SEO optimization.</p>
+      <p>Built with: PHP, PWA, Ajax, MySQL, Bootstrap</p>
+    </article>
+
+    <article>
+      <h3>College Management System (CMS)</h3>
+      <p>A full-featured school/college management system with QR-based attendance, automatic routine generation, and role-based dashboards.</p>
+      <p>Built with: PHP, Python, MySQL, QR Scanner</p>
+    </article>
+
+    <article>
+      <h3>Dental Clinic Management System</h3>
+      <p>A Django-based clinic management platform for dental operations including appointments, prescriptions, and payment-based controls.</p>
+      <p>Built with: Django, Python, MySQL</p>
+    </article>
+
+    <article>
+      <h3>MeroDoc</h3>
+      <p>A Nepali language productivity tool with document editing, speech-to-text, and spelling assistance.</p>
+      <p>Built with: HTML, CSS, JavaScript, PWA</p>
+      <p>URL: https://merodoc.darpanadhikari.com.np</p>
+    </article>
+
+    <article>
+      <h3>Code Compiler & Playground</h3>
+      <p>A browser-based code editor and compiler for HTML, CSS, and JavaScript with real-time execution and project export.</p>
+      <p>Built with: HTML, CSS, JavaScript, PWA</p>
+      <p>URL: https://compiler.darpanadhikari.com.np</p>
+    </article>
+
+    <article>
+      <h3>drpStudio</h3>
+      <p>A canvas-based code and layout studio for visually arranging and exporting HTML/CSS/JS projects.</p>
+      <p>Built with: HTML, CSS, JavaScript, Canvas API</p>
+    </article>
+
+    <article>
+      <h3>Personal Attendance Tracker</h3>
+      <p>A Firebase-based attendance system for tracking daily in-time and out-time with Google login.</p>
+      <p>Built with: HTML, CSS, JavaScript, Firebase</p>
+    </article>
+
+    <article>
+      <h3>Task Organizer</h3>
+      <p>A task management workspace with drag-and-drop support and local storage persistence.</p>
+      <p>Built with: HTML, CSS, JavaScript, PWA</p>
+      <p>URL: https://darpanadhikari.github.io/task-organizer</p>
+    </article>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>Email: darpand263@gmail.com</p>
+    <p>LinkedIn: https://www.linkedin.com/in/darpan-adhikari-81b866280/</p>
+    <p>GitHub: https://github.com/DarpanAdhikari</p>
+    <p>Phone: +977-9847878782</p>
+  </section>
+</div>
+
+<script type="module" src="assets/main_3d.js"></script>
+</body>
+</html>
